@@ -7,9 +7,9 @@ services:
       context: ..
       dockerfile: docker/Dockerfile
     volumes:
-      - ../config/data.yaml:/app/config/data.yaml  # 掛載 YAML 檔案
+      - ../config/data.yaml:/app/config/data.yaml  # mount YAML file
     environment:
-      - CONFIG_PATH=/app/config/data.yaml  # 傳遞環境變數
+      - CONFIG_PATH=/app/config/data.yaml  # Env to yaml file path
     stdin_open: true
     tty: true
     command: ["tail", "-f", "/dev/null"]

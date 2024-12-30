@@ -3,18 +3,18 @@ import os
 
 
 class ConfigReader:
-    """YAML 設定檔讀取類別"""
+    """YAML Class to read config file"""
 
     def __init__(self, file_path: str):
         """
-        初始化並讀取 YAML 文件
-        :param file_path: YAML 文件路徑
+        Init and read YAML file
+        :param file_path: YAML file path
         """
         self.file_path = file_path
         self.data = self._load_yaml()
 
     def _load_yaml(self):
-        """內部方法：載入 YAML 文件並回傳資料"""
+        """Inner func: load YAML file and return"""
         if not os.path.exists(self.file_path):
             raise FileNotFoundError(f"YAML file not found at {self.file_path}")
         try:
@@ -24,5 +24,5 @@ class ConfigReader:
             raise RuntimeError(f"Error reading YAML file: {e}")
 
     def get_data(self):
-        """取得所有 YAML 資料"""
+        """Get All YAML data"""
         return self.data
