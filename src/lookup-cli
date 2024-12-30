@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+import sys
+from config_reader import ConfigReader
+import os
+file_path = os.path.dirname(os.path.abspath(__file__))
+
+
+def print_usage():
+    """顯示使用手冊"""
+    print("Usage: lookup-cli <name> <output_field>")
+
+
+def main():
+    # 檢查參數長度
+    if len(sys.argv) != 3:
+        print_usage()
+        sys.exit(1)
+
+    # 讀取命令列參數
+    name = sys.argv[1]
+    output_field = sys.argv[2]
+
+    # 使用環境變數或預設值指定 YAML 文件位置
+    config_path = os.getenv("CONFIG_PATH", f"{file_path}/../config/data.yaml")
+
+    # 初始化 ConfigReader
+    try:
+        reader = ConfigReader(f"{config_path}")
+        data = reader.get_data()
+    except FileNotFoundError as e:
+        print(e)
+        sys.exit(1)
+    except RuntimeError as e:
+        print(e)
+        sys.exit(1)
+
+    # 查找名稱
+    person = next((item for item in data if item.get('name') == name), None)
+
+    if not person:
+        print("Name not found")
+        sys.exit(1)
+
+    # 查找欄位
+    if output_field not in person:
+        print("Field not found")
+    else:
+        print(person[output_field])
+
+
+if __name__ == "__main__":
+    main()

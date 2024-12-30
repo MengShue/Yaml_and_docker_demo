@@ -1,0 +1,15 @@
+
+services:
+  lookup-cli-service:
+    image: lookup-cli:latest
+    container_name: lookup-cli-container
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ../config/data.yaml:/app/config/data.yaml  # 掛載 YAML 檔案
+    environment:
+      - CONFIG_PATH=/app/config/data.yaml  # 傳遞環境變數
+    stdin_open: true
+    tty: true
+    command: ["tail", "-f", "/dev/null"]
